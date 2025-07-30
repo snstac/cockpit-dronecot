@@ -1,4 +1,4 @@
-Name: aiscot
+Name: cockpit-aiscot
 Version: %{VERSION}
 Release: 1%{?dist}
 Summary: Cockpit AISCOT Module

@@ -1,4 +1,4 @@
-Package: aiscot
+Package: cockpit-aiscot
 Version: 1.0.0
 Section: admin
 Priority: optional
@@ -8,5 +8,5 @@ Author: Greg Albrecht <oss@undef.net>
 Maintainer: Greg Albrecht <oss@undef.net>
 Description: Cockpit plugin for AISCOT
  This package provides a Cockpit plugin for managing AISCOT.
-Homepage: https://aiscot.rtfd.io
-Website: https://aiscot.rtfd.io
+Homepage: https://cockpit-aiscot.rtfd.io
+Website: https://cockpit-aiscot.rtfd.io

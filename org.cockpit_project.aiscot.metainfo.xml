@@ -5,7 +5,7 @@
   <name>AISCOT</name>
   <summary>Cockpit Module for AISCOT</summary>
   <description>
-    <p>AISCOT module for cockpit
+    <p>This Cockpit module enables management of AISCOT, a gateway that connects marine systems to TAK.</p>
     </p>
   </description>
   <extends>com.snstac.aiscot</extends>

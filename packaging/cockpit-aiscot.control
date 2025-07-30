@@ -3,7 +3,7 @@ Version: 1.0.0
 Section: admin
 Priority: optional
 Architecture: all
-Depends: cockpit, python3, python3-aiscot
+Depends: cockpit, python3, aiscot
 Author: Greg Albrecht <oss@undef.net>
 Maintainer: Greg Albrecht <oss@undef.net>
 Description: Cockpit plugin for AISCOT

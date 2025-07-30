@@ -208,4 +208,7 @@ deb:
 	rm -r "`pwd`/output"
 
 
+install_pkg_build_deps:
+	sudo bash packaging/install_pkg_build_deps.sh
+
 .PHONY: all clean install devel-install devel-uninstall print-version dist node-cache rpm prepare-check check vm print-vm deb

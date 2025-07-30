@@ -21,7 +21,7 @@ jobs:
           fetch-depth: 0
 
       - name: Install Debian Package Building Dependencies
-        run: bash packaging/install_pkg_build_deps.sh
+        run: make install_pkg_build_deps
 
       - name: Pacify git's permission check per https://github.blog/2022-04-12-git-security-vulnerability-announced/
         run: git config --global --add safe.directory '*'

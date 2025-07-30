@@ -2,14 +2,10 @@
 <component type="addon">
   <id>com.snstac.aiscot</id>
   <metadata_license>CC0-1.0</metadata_license>
-  <name>Starter Kit</name>
-  <summary>Scaffolding for a cockpit module</summary>
+  <name>AISCOT</name>
+  <summary>Cockpit Module for AISCOT</summary>
   <description>
-    <p>
-      Scaffolding for a cockpit module.
-
-      This is just a demo which does not do much. Please replace
-      this with a real description.
+    <p>AISCOT module for cockpit
     </p>
   </description>
   <extends>com.snstac.aiscot</extends>

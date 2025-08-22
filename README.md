@@ -1,6 +1,6 @@
-# Cockpit Application for AISCOT
+# Cockpit Application for ADSBCOT
 
-This is a [Cockpit](https://cockpit-project.org/) "Application" for managing [AISCOT](https://aiscot.rtfd.io). This Application provides service control, configuration and status information in a web-based interface.
+This is a [Cockpit](https://cockpit-project.org/) "Application" for managing [ADSBCOT](https://adsbcot.rtfd.io). This Application provides service control, configuration and status information in a web-based interface.
 
 # Installing
 

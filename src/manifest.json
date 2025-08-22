@@ -5,8 +5,8 @@
   },
   "tools": {
     "index": {
-      "label": "Marine (AISCOT)",
-      "path": "/aiscot"
+      "label": "Air (ADSBCOT)",
+      "path": "/adsbcot"
     }
   }
 }

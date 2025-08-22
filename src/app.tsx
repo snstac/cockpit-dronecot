@@ -52,7 +52,7 @@ const _ = cockpit.gettext;
 
 export const Application: React.FC = () => {
     // Configuration
-    const SERVICE_NAME = 'aiscot'; // Change this to your service name
+    const SERVICE_NAME = 'adsbcot'; // Change this to your service name
     const CONFIG_FILE = `/etc/default/${SERVICE_NAME}`;
 
     const [isDebugExpanded, setIsDebugExpanded] = useState<boolean>(false);
@@ -174,7 +174,7 @@ export const Application: React.FC = () => {
         'MID_DB_FILE': {
             type: 'path',
             description: 'Path to the MID database file, used for decoding AIS messages',
-            defaultValue: '/var/lib/aiscot/mid.db',
+            defaultValue: '/var/lib/adsbcot/mid.db',
             validation: /^\/[\w\-\/\.]*$/,
             requiresQuoting: true,
             required: false
@@ -183,7 +183,7 @@ export const Application: React.FC = () => {
         'SHIP_DB_FILE': {
             type: 'path',
             description: 'Path to the Ship database file, used for decoding AIS messages',
-            defaultValue: '/var/lib/aiscot/ship.db',
+            defaultValue: '/var/lib/adsbcot/ship.db',
             validation: /^\/[\w\-\/\.]*$/,
             requiresQuoting: true,   
             required: false

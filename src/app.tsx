@@ -1,20 +1,5 @@
 /*
- * This file is part of Cockpit.
- *
- * Copyright (C) 2017 Red Hat, Inc.
- *
- * Cockpit is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation; either version 2.1 of the License, or
- * (at your option) any later version.
- *
- * Cockpit is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with Cockpit; If not, see <http://www.gnu.org/licenses/>.
+ * Copyright Sensors & Signals LLC https://www.snstac.com/
  */
 
 import React, { useEffect, useState } from 'react';
@@ -46,6 +31,8 @@ import EllipsisVIcon from '@patternfly/react-icons/dist/esm/icons/ellipsis-v-ico
 
 import cockpit from 'cockpit';
 import { capitalize } from '@patternfly/react-core';
+import { CONF_PARAMS } from './conf';  
+import { EnvVarData } from './types';
 
 const _ = cockpit.gettext;
 
@@ -65,294 +52,11 @@ export const Application: React.FC = () => {
     let statusUpdateInterval: number | null = null;
     let logFollowProcess: any = null;
 
-    // Type Definitions
-    type EnvVarDefinition = {
-        type: 'boolean' | 'string' | 'number' | 'enum' | 'path' | 'url';
-        description: string;
-        defaultValue: string;
-        validation?: RegExp;
-        options?: string[];
-        range?: [number, number];
-        requiresQuoting?: boolean;
-        required?: boolean; // Add this line to allow 'required' property
-    };
-
-    type EnvVarData = {
-        value: string;
-        quoted: boolean;
-        quoteStyle: 'none' | 'double' | 'single';
-        originalLine?: string;
-        lineNumber?: number;
-        commented: boolean;
-        suggested?: boolean;
-        required?: boolean; // New field to indicate if the variable is required
-    };
 
     type FileStructureItem = 
         | { type: 'comment'; content: string; lineNumber: number }
         | { type: 'variable'; name: string; lineNumber: number };
 
-    const CONF_PARAMS: Record<string, EnvVarDefinition> = {
-        'COT_URL': {
-            type: 'url',
-            description: 'URL of the CoT destination, typically Mesh SA or TAK Server',
-            defaultValue: 'udp+wo://239.2.3.1:6969',
-            validation: /^(udp\+wo|http|https|udp|tcp|tls|file|log|tcp\+wo|udp\+broadcast):\/\/[^\s]+$/,
-            requiresQuoting: true,
-            required: true
-        },
-
-        'LOG_LEVEL': {
-            type: 'enum',
-            description: 'Logging level',
-            defaultValue: 'INFO',
-            options: ['DEBUG', 'INFO', 'WARN', 'ERROR'],
-            validation: /^(DEBUG|INFO|WARN|ERROR)$/i,
-            required: false
-        },
-
-        'LISTEN_PORT': {
-            type: 'number',
-            description: '(OTA) AIS UDP Listen Port, for use with Over-the-air (RF) AIS decoders',
-            defaultValue: '5050',
-            validation: /^\d{1,5}$/,
-            range: [1, 65535],
-            required: false
-        },
-
-        'LISTEN_HOST': {
-            type: 'string',
-            description: '(OTA) IP address to bind to for listening to AIS messages',
-            defaultValue: '0.0.0.0',
-            validation: /^(\d{1,3}\.){3}\d{1,3}$/,
-            required: false
-        },
-
-        'FEED_URL': {
-            type: 'url',
-            description: '(Online) URL of the AIS feed from an AIS aggregator',
-            defaultValue: '',
-            validation: /^(http|https|file):\/\/[^\s]+$/,
-            requiresQuoting: true,
-            required: false
-        },
-
-        'POLL_INTERVAL': {
-            type: 'number',
-            description: '(Online) Interval in seconds to poll for new AIS messages from AIS aggregators',
-            defaultValue: '61',
-            validation: /^\d+$/,
-            range: [1, 3600], // 1 second to 1 hour,
-            required: false
-        },
-
-        'KNOWN_CRAFT': {
-            type: 'path',
-            description: 'CSV-style hints file for overriding callsign, icon, COT Type, etc',
-            defaultValue: '',
-            validation: /^\/[\w\-\/\.]*$/,
-            requiresQuoting: true,
-            required: false
-        },
-
-        'INCLUDE_ALL_CRAFT': {
-            type: 'boolean',
-            description: 'If KNOWN_CRAFT is set, include all craft in the CoT, even those not in the KNOWN_CRAFT file.',
-            defaultValue: 'true',
-            validation: /^(true|false|yes|no|1|0)$/i,
-            required: false
-        },
-
-        'IGNORE_ATON': {
-            type: 'boolean',
-            description: 'Ignore AIS from Aids to Navigation (buoys, etc). This is useful if you only want to see ships.',
-            defaultValue: 'false',
-            validation: /^(true|false|yes|no|1|0)$/i,
-            required: false
-        },
-
-        'MID_DB_FILE': {
-            type: 'path',
-            description: 'Path to the MID database file, used for decoding AIS messages',
-            defaultValue: '/var/lib/adsbcot/mid.db',
-            validation: /^\/[\w\-\/\.]*$/,
-            requiresQuoting: true,
-            required: false
-        },
-
-        'SHIP_DB_FILE': {
-            type: 'path',
-            description: 'Path to the Ship database file, used for decoding AIS messages',
-            defaultValue: '/var/lib/adsbcot/ship.db',
-            validation: /^\/[\w\-\/\.]*$/,
-            requiresQuoting: true,   
-            required: false
-        },
-
-        'EXTRA_ARGS': {
-            type: 'string',
-            description: 'Additional command line arguments (NOT IMPLEMENTED YET)',
-            defaultValue: '',
-            requiresQuoting: true,
-            required: false
-        },
-
-        // PyTAK TLS Configuration
-        "PYTAK_TLS_CLIENT_CERT": {
-            type: 'path',
-            description: 'Path to the TLS client certificate file, if required',
-            defaultValue: '',
-            validation: /^\/[\w\-\/\.]*$/,
-            requiresQuoting: true,
-            required: false
-        },
-
-        "PYTAK_TLS_CLIENT_KEY": {
-            type: 'path',
-            description: 'Path to the TLS client key file, if required',
-            defaultValue: '',
-            validation: /^\/[\w\-\/\.]*$/,
-            requiresQuoting: true,
-            required: false
-        },
-
-        "PYTAK_TLS_CLIENT_PASSWORD": {
-            type: 'string',
-            description: 'Password for the TLS client certificate, if required',
-            defaultValue: '',
-            requiresQuoting: true,
-            required: false
-        },
-
-        "PYTAK_TLS_CLIENT_CAFILE": {
-            type: 'path',
-            description: 'Path to the CA file for TLS connections, if required',
-            defaultValue: '',
-            validation: /^\/[\w\-\/\.]*$/,
-            requiresQuoting: true,
-            required: false
-
-        },
-
-        "PYTAK_TLS_CLIENT_CIPHERS": {
-            type: 'string',
-            description: 'Ciphers to use for TLS connections, if required',
-            defaultValue: '',
-            requiresQuoting: true,
-            required: false
-        },
-
-        "PYTAK_TLS_DONT_CHECK_HOSTNAME": {
-            type: 'boolean',
-            description: 'Disable hostname verification for TLS connections',
-            defaultValue: 'false',
-            validation: /^(true|false|yes|no|1|0)$/i,
-            required: false
-        },
-        "PYTAK_TLS_DONT_VERIFY": {
-            type: 'boolean',
-            description: 'Disable TLS certificate verification',
-            defaultValue: 'false',
-            validation: /^(true|false|yes|no|1|0)$/i,
-            required: false
-        },
-        "PYTAK_TLS_SERVER_EXPECTED_HOSTNAME": {
-            type: 'string',
-            description: 'Expected hostname for the TLS server, used for verification',
-            defaultValue: '',
-            requiresQuoting: true,
-            required: false
-        },
-        "PYTAK_TLS_CERT_ENROLLMENT_USERNAME": {
-            type: 'string',
-            description: 'Username for TLS certificate enrollment',
-            defaultValue: '',
-            requiresQuoting: true,
-            required: false
-        },
-        "PYTAK_TLS_CERT_ENROLLMENT_PASSWORD": {
-            type: 'string',
-            description: 'Password for TLS certificate enrollment',
-            defaultValue: '',
-            requiresQuoting: true,
-            required: false
-        },
-        "PYTAK_TLS_CERT_ENROLLMENT_PASSPHRASE": {
-            type: 'string',
-            description: 'Passphrase for the TLS certificate enrollment, if required',
-            defaultValue: '',
-            requiresQuoting: true,
-            required: false
-        },
-
-        "COT_ACCESS": {
-            type: 'enum',
-            description: 'CoT Access level for the messages',
-            defaultValue: 'public',
-            options: ['public', 'restricted', 'private'],
-            validation: /^(public|restricted|private)$/i,
-            required: false
-        },
-
-        // CoT Event Type and Icon Configuration
-        'COT_STALE': {
-            type: 'number',
-            description: 'CoT Stale period ("timeout"), in seconds',
-            defaultValue: '3600',
-            validation: /^\d+$/,
-            required: false
-        },
-
-        'COT_TYPE': {
-            type: 'string',
-            description: 'Override COT Event Type ("marker type")',
-            defaultValue: 'a-u-S-X-M',
-            validation: /^[a-zA-Z0-9\-_]+$/,
-            requiresQuoting: true,
-            required: false
-        },
-
-        'COT_ICON': {
-            type: 'string',
-            description: 'Set a custom user icon / custom marker icon in TAK. Contains a Data Package UUID and resource name (file name)',
-            defaultValue: '',
-            requiresQuoting: true,
-            required: false
-        },
-        
-        "COT_CAVEAT": {
-            type: 'string',
-            description: 'CoT Caveat for the messages, used to indicate special conditions',
-            defaultValue: '',
-            requiresQuoting: true,
-            required: false
-        },
-
-        "COT_RELTO": {
-            type: 'string',
-            description: 'CoT RelTo attribute, used to specify the relationship to other messages',
-            defaultValue: '',
-            requiresQuoting: true,
-            required: false
-        },
-
-        "COT_QOS": {
-            type: 'enum',
-            description: 'CoT Quality of Service level for the messages',
-            defaultValue: 'standard',
-            options: ['standard', 'high', 'low'],
-            validation: /^(standard|high|low)$/i,
-            required: false
-        },
-
-        "COT_OPEX": {
-            type: 'boolean',
-            description: 'Indicates if the CoT message is for operational use',
-            defaultValue: 'false',
-            validation: /^(true|false|yes|no|1|0)$/i,
-            required: false
-        }
-    };
 
     useEffect(() => {
         let watcher: any = null;
@@ -388,6 +92,39 @@ export const Application: React.FC = () => {
     );
     
     const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+
+    useEffect(() => {
+        async function readConfigFileAndPopulateForm() {
+            try {
+                const content = await cockpit.file(CONFIG_FILE, { superuser: "try" }).read();
+                setConfigFileContents(content);
+
+                // Parse config file lines
+                const lines = content.split('\n');
+                const newForm: Record<string, string> = { ...envVarForm };
+                for (const line of lines) {
+                    // Ignore comments and empty lines
+                    const trimmed = line.trim();
+                    if (!trimmed || trimmed.startsWith('#')) continue;
+                    const match = trimmed.match(/^([A-Za-z0-9_]+)=(.*)$/);
+                    if (match) {
+                        let [, key, value] = match;
+                        // Remove quotes if present
+                        value = value.replace(/^"(.*)"$/, '$1').replace(/^'(.*)'$/, '$1');
+                        if (key in CONF_PARAMS) {
+                            newForm[key] = value;
+                        }
+                    }
+                }
+                setEnvVarForm(newForm);
+            } catch (err) {
+                // Ignore error, configFileContents already set by other effect
+            }
+        }
+        readConfigFileAndPopulateForm();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [configFileContents]);
+
 
     // Validation helper
     function validateField(key: string, value: string): string {

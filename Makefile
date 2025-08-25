@@ -202,7 +202,7 @@ deb:
 	mkdir -m 0755 -p "`pwd`/output/cockpit-$(PACKAGE_NAME)/usr/share/cockpit/$(PACKAGE_NAME)"
 	cp -r dist/* "`pwd`/output/cockpit-$(PACKAGE_NAME)/usr/share/cockpit/$(PACKAGE_NAME)"
 	cp packaging/cockpit-$(PACKAGE_NAME).control "`pwd`/output/cockpit-$(PACKAGE_NAME)/DEBIAN/control"
-	sed -i "s/1.0.0/$($VERSION)/g" "`pwd`/output/cockpit-$(PACKAGE_NAME)/DEBIAN/control"
+	sed -i "s/1.0.0/$(VERSION)/g" "`pwd`/output/cockpit-$(PACKAGE_NAME)/DEBIAN/control"
 	chmod 755 "`pwd`/output/cockpit-$(PACKAGE_NAME)/DEBIAN/control"
 	dpkg-deb -Zxz --build output/cockpit-$(PACKAGE_NAME)
 	mv "`pwd`/output/cockpit-$(PACKAGE_NAME).deb" "`pwd`/"

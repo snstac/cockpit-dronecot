@@ -16,7 +16,7 @@ export const CONF_PARAMS: Record<string, EnvVarDefinition> = {
         description: 'URL of the CoT destination, typically Mesh SA or TAK Server',
         defaultValue: 'udp+wo://239.2.3.1:6969',
         validation: /^(udp\+wo|http|https|udp|tcp|tls|file|log|tcp\+wo|udp\+broadcast):\/\/[^\s]+$/,
-        requiresQuoting: true,
+        requiresQuoting: false,
         required: true
     },
 
@@ -25,7 +25,7 @@ export const CONF_PARAMS: Record<string, EnvVarDefinition> = {
         description: 'ADS-B data source URL. Can be a local file (file://), a web URL (http:// or https://), a dump1090 BaseStation (SBS-1, "raw") host and port (tcp+raw://xxx:30003), a dump1090 Beast binary post and port (tcp+beast://xxx:30005) (unix://). For dump1090-fa, use file:///run/dump1090-fa/aircraft.json',
         defaultValue: 'file:///run/dump1090-fa/aircraft.json',
         validation: /^(http|https|file|unix|tcp|tcp+raw|tcp+beast):\/\/[^\s]+$/,
-        requiresQuoting: true,
+        requiresQuoting: false,
         required: false
     },
 
@@ -43,7 +43,7 @@ export const CONF_PARAMS: Record<string, EnvVarDefinition> = {
         description: 'CSV-style hints file for overriding callsign, icon, COT Type, etc',
         defaultValue: '',
         validation: /^\/[\w\-\/\.]*$/,
-        requiresQuoting: true,
+        requiresQuoting: false,
         required: false
     },
 
@@ -91,7 +91,7 @@ export const CONF_PARAMS: Record<string, EnvVarDefinition> = {
         type: 'string',
         description: 'Additional command line arguments (NOT IMPLEMENTED YET)',
         defaultValue: '',
-        requiresQuoting: true,
+        requiresQuoting: false,
         required: false
     },
 
@@ -101,7 +101,7 @@ export const CONF_PARAMS: Record<string, EnvVarDefinition> = {
         description: 'Path to the TLS client certificate file, if required',
         defaultValue: '',
         validation: /^\/[\w\-\/\.]*$/,
-        requiresQuoting: true,
+        requiresQuoting: false,
         required: false
     },
 
@@ -110,7 +110,7 @@ export const CONF_PARAMS: Record<string, EnvVarDefinition> = {
         description: 'Path to the TLS client key file, if required',
         defaultValue: '',
         validation: /^\/[\w\-\/\.]*$/,
-        requiresQuoting: true,
+        requiresQuoting: false,
         required: false
     },
 
@@ -118,7 +118,7 @@ export const CONF_PARAMS: Record<string, EnvVarDefinition> = {
         type: 'string',
         description: 'Password for the TLS client certificate, if required',
         defaultValue: '',
-        requiresQuoting: true,
+        requiresQuoting: false,
         required: false
     },
 
@@ -127,7 +127,7 @@ export const CONF_PARAMS: Record<string, EnvVarDefinition> = {
         description: 'Path to the CA file for TLS connections, if required',
         defaultValue: '',
         validation: /^\/[\w\-\/\.]*$/,
-        requiresQuoting: true,
+        requiresQuoting: false,
         required: false
 
     },
@@ -136,7 +136,7 @@ export const CONF_PARAMS: Record<string, EnvVarDefinition> = {
         type: 'string',
         description: 'Ciphers to use for TLS connections, if required',
         defaultValue: '',
-        requiresQuoting: true,
+        requiresQuoting: false,
         required: false
     },
 
@@ -158,28 +158,28 @@ export const CONF_PARAMS: Record<string, EnvVarDefinition> = {
         type: 'string',
         description: 'Expected hostname for the TLS server, used for verification',
         defaultValue: '',
-        requiresQuoting: true,
+        requiresQuoting: false,
         required: false
     },
     "PYTAK_TLS_CERT_ENROLLMENT_USERNAME": {
         type: 'string',
         description: 'Username for TLS certificate enrollment',
         defaultValue: '',
-        requiresQuoting: true,
+        requiresQuoting: false,
         required: false
     },
     "PYTAK_TLS_CERT_ENROLLMENT_PASSWORD": {
         type: 'string',
         description: 'Password for TLS certificate enrollment',
         defaultValue: '',
-        requiresQuoting: true,
+        requiresQuoting: false,
         required: false
     },
     "PYTAK_TLS_CERT_ENROLLMENT_PASSPHRASE": {
         type: 'string',
         description: 'Passphrase for the TLS certificate enrollment, if required',
         defaultValue: '',
-        requiresQuoting: true,
+        requiresQuoting: false,
         required: false
     },
 
@@ -196,7 +196,7 @@ export const CONF_PARAMS: Record<string, EnvVarDefinition> = {
     'COT_STALE': {
         type: 'number',
         description: 'CoT Stale period ("timeout"), in seconds',
-        defaultValue: '3600',
+        defaultValue: '',
         validation: /^\d+$/,
         required: false
     },
@@ -204,9 +204,9 @@ export const CONF_PARAMS: Record<string, EnvVarDefinition> = {
     'COT_TYPE': {
         type: 'string',
         description: 'Override COT Event Type ("marker type")',
-        defaultValue: 'a-u-A-X-M',
+        defaultValue: '',
         validation: /^[a-zA-Z0-9\-_]+$/,
-        requiresQuoting: true,
+        requiresQuoting: false,
         required: false
     },
 
@@ -214,7 +214,7 @@ export const CONF_PARAMS: Record<string, EnvVarDefinition> = {
         type: 'string',
         description: 'Set a custom user icon / custom marker icon in TAK. Contains a Data Package UUID and resource name (file name)',
         defaultValue: '',
-        requiresQuoting: true,
+        requiresQuoting: false,
         required: false
     },
     
@@ -222,7 +222,7 @@ export const CONF_PARAMS: Record<string, EnvVarDefinition> = {
         type: 'string',
         description: 'CoT Caveat for the messages, used to indicate special conditions',
         defaultValue: '',
-        requiresQuoting: true,
+        requiresQuoting: false,
         required: false
     },
 
@@ -230,7 +230,7 @@ export const CONF_PARAMS: Record<string, EnvVarDefinition> = {
         type: 'string',
         description: 'CoT RelTo attribute, used to specify the relationship to other messages',
         defaultValue: '',
-        requiresQuoting: true,
+        requiresQuoting: false,
         required: false
     },
 

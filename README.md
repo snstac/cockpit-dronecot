@@ -1,6 +1,6 @@
-# Cockpit Application for ADSBCOT
+# Cockpit Application for DroneCOT
 
-This is a [Cockpit](https://cockpit-project.org/) "Application" for managing [ADSBCOT](https://adsbcot.rtfd.io). This Application provides service control, configuration and status information in a web-based interface.
+This is a [Cockpit](https://cockpit-project.org/) "Application" for managing [DroneCOT](https://dronecot.rtfd.io). This Application provides service control, configuration and status information in a web-based interface.
 
 # Installing
 

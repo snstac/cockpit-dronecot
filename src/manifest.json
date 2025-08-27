@@ -5,8 +5,8 @@
   },
   "tools": {
     "index": {
-      "label": "Air (ADSBCOT)",
-      "path": "/adsbcot"
+      "label": "Air (DroneCOT)",
+      "path": "/dronecot"
     }
   }
 }

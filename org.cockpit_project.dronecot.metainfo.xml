@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="addon">
+  <id>com.snstac.dronecot</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <name>DroneCOT</name>
+  <summary>Cockpit Module for DroneCOT</summary>
+  <description>
+    <p>This Cockpit module enables management of DroneCOT, a gateway that connects marine systems to TAK.</p>
+    </p>
+  </description>
+  <extends>com.snstac.dronecot</extends>
+  <launchable type="cockpit-manifest">dronecot</launchable>
+  <url type="homepage">https://github.com/snstac/cockpit-dronecot</url>
+  <url type="bugtracker">https://github.com/snstac/cockpit-dronecot/issues</url>
+  <update_contact>info@snstac.com</update_contact>
+  <developer id="com.snstac">
+    <name>Sensors &amp; Signals</name>
+  </developer>
+</component>

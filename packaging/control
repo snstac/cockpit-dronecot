@@ -1,0 +1,12 @@
+Package: cockpit-dronecot
+Version: 1.0.0
+Section: admin
+Priority: optional
+Architecture: all
+Depends: cockpit, python3, dronecot
+Author: Greg Albrecht <oss@undef.net>
+Maintainer: Greg Albrecht <oss@undef.net>
+Description: Cockpit plugin for DroneCOT
+ This package provides a Cockpit plugin for managing DroneCOT.
+Homepage: https://cockpit-dronecot.rtfd.io
+Website: https://cockpit-dronecot.rtfd.io

@@ -39,7 +39,7 @@ const _ = cockpit.gettext;
 
 export const Application: React.FC = () => {
     // Configuration
-    const SERVICE_NAME = 'adsbcot'; // Change this to your service name
+    const SERVICE_NAME = 'dronecot'; // Change this to your service name
     const CONFIG_FILE = `/etc/default/${SERVICE_NAME}`;
 
     const [isDebugExpanded, setIsDebugExpanded] = useState<boolean>(false);

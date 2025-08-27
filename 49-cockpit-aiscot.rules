@@ -11,7 +11,7 @@ polkit.addRule(function(action, subject) {
 
     if (
         action.id == "org.freedesktop.cockpit.file" &&
-        action.lookup("path") == "/etc/default/adsbcot" &&
+        action.lookup("path") == "/etc/default/dronecot" &&
         subject.isInGroup("sudo")
     ) {
         return polkit.Result.YES;

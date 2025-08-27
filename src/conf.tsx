@@ -20,70 +20,121 @@ export const CONF_PARAMS: Record<string, EnvVarDefinition> = {
         required: true
     },
 
-    'FEED_URL': {
-        type: 'url',
-        description: 'ADS-B data source URL. Can be a local file (file://), a web URL (http:// or https://), a dump1090 BaseStation (SBS-1, "raw") host and port (tcp+raw://xxx:30003), a dump1090 Beast binary post and port (tcp+beast://xxx:30005) (unix://). For dump1090-fa, use file:///run/dump1090-fa/aircraft.json',
-        defaultValue: 'file:///run/dump1090-fa/aircraft.json',
-        validation: /^(http|https|file|unix|tcp|tcp+raw|tcp+beast):\/\/[^\s]+$/,
+    'SENSOR_ID': {
+        type: 'string',
+        description: 'Unique Sensor ID for this source.',   
+        defaultValue: 'Unknown-Sensor-Id',
+        validation: /^[a-zA-Z0-9\-_]+$/,
         requiresQuoting: false,
         required: false
     },
 
-    'POLL_INTERVAL': {
-        type: 'number',
-        description: 'If the FEED_URL is of type HTTP, the period, in seconds, to poll this URL.',
-        defaultValue: '3',
-        validation: /^\d+$/,
-        range: [1, 3600], // 1 second to 1 hour,
+    'SENSOR_PAYLOAD_TYPE': {
+        type: 'string',
+        description: 'Sensor Payload Type, used to identify the type of sensor data being sent',
+        defaultValue: 'Uknown-Sensor-Payload-Type',
+        validation: /^[a-zA-Z0-9\-_]+$/,
+        requiresQuoting: false,
         required: false
     },
 
-    'KNOWN_CRAFT': {
+    'SENSOR_COT_TYPE': {
+        type: 'string',
+        description: 'Sensor CoT Type, used to categorize the sensor data in the CoT messages',
+        defaultValue: 'a-f-G-E-S-E',  
+        validation: /^[a-zA-Z0-9\-_]+$/,
+        requiresQuoting: false,
+        required: false
+    },
+
+    'OP_COT_TYPE': {
+        type: 'string',
+        description: 'Operator CoT Type, used to categorize the operator in the CoT messages',
+        defaultValue: 'a-u-G',  
+        validation: /^[a-zA-Z0-9\-_]+$/,
+        requiresQuoting: false,
+        required: false
+    },
+
+    'UAS_COT_TYPE': {
+        type: 'string',
+        description: 'UAS CoT Type, used to categorize the UAS in the CoT messages',
+        defaultValue: 'a-u-A-M-H-Q',
+        validation: /^[a-zA-Z0-9\-_]+$/,
+        requiresQuoting: false,
+        required: false
+    },
+
+    'HOME_COT_TYPE': {
+        type: 'string', 
+        description: 'Home CoT Type, used to categorize the home location in the CoT messages',
+        defaultValue: 'a-u-G',
+        validation: /^[a-zA-Z0-9\-_]+$/,
+        requiresQuoting: false,
+        required: false
+    },
+
+    'MQTT_BROKER': {
+        type: 'string',
+        description: 'MQTT Broker address (hostname or IP address)',
+        defaultValue: 'localhost',
+        requiresQuoting: false,
+        required: false
+    },
+
+    'MQTT_PORT': {
+        type: 'number',
+        description: 'MQTT Broker port',
+        defaultValue: '1883',
+        validation: /^\d+$/,
+        required: false
+    },
+
+    'MQTT_TOPIC': {
+        type: 'string',
+        description: 'MQTT Topic to subscribe to for receiving aircraft position data',
+        defaultValue: 'aircraft/positions',
+        requiresQuoting: false,
+        required: false
+    },
+    'MQTT_USERNAME': {
+        type: 'string',
+        description: 'Username for MQTT Broker authentication, if required',
+        defaultValue: '',
+        requiresQuoting: false,
+        required: false
+    },
+    'MQTT_PASSWORD': {
+        type: 'string',
+        description: 'Password for MQTT Broker authentication, if required',
+        defaultValue: '',
+        requiresQuoting: false,
+        required: false
+    },
+
+    'MQTT_CLIENT_ID': {
+        type: 'string',
+        description: 'Client ID to use when connecting to the MQTT Broker',
+        defaultValue: 'pyTAK-mqtt-bridge',
+        requiresQuoting: false,
+        required: false
+    },
+
+    'MQTT_TLS_CLIENT_CERT': {
         type: 'path',
-        description: 'CSV-style hints file for overriding callsign, icon, COT Type, etc',
+        description: 'Path to client certificate file for TLS connection to the MQTT Broker, if required',
         defaultValue: '',
         validation: /^\/[\w\-\/\.]*$/,
         requiresQuoting: false,
         required: false
     },
 
-    'INCLUDE_ALL_CRAFT': {
-        type: 'boolean',
-        description: 'If KNOWN_CRAFT is set, include all craft in the CoT, even those not in the KNOWN_CRAFT file.',
-        defaultValue: 'true',
-        validation: /^(true|false|yes|no|1|0)$/i,
-        required: false
-    },
-
-    'INCLUDE_TISB': {
-        type: 'boolean',
-        description: 'Include TIS-B targets in the CoT output (if available from the data source)',
-        defaultValue: 'false',
-        validation: /^(true|false|yes|no|1|0)$/i,
-        required: false
-    },
-
-    'TISB_ONLY': {
-        type: 'boolean',    
-        description: 'Include ONLY TIS-B targets in the CoT output (if available from the data source)',
-        defaultValue: 'false',
-        validation: /^(true|false|yes|no|1|0)$/i,
-        required: false
-    },
-
-    'ALT_UPPER': {
-        type: 'number',
-        description: 'Upper Altitude Limit, geometric (GNSS / INS) altitude in feet referenced to the WGS84 ellipsoid..',
+    'MQTT_TLS_CLIENT_KEY': {
+        type: 'path',
+        description: 'Path to client key file for TLS connection to the MQTT Broker, if required',
         defaultValue: '',
-        validation: /^\d+$/,
-        required: false
-    },
-
-    'ALT_LOWER': {
-        type: 'number',
-        description: 'Lower Altitude Limit, geometric (GNSS / INS) altitude in feet referenced to the WGS84 ellipsoid..',
-        defaultValue: '',
-        validation: /^\d+$/,
+        validation: /^\/[\w\-\/\.]*$/,
+        requiresQuoting: false,
         required: false
     },
 

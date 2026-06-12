@@ -2,7 +2,7 @@ import { EnvVarDefinition } from './types';
 
 export const CONF_PARAMS: Record<string, EnvVarDefinition> = {
 
-    'LOG_LEVEL': {
+    LOG_LEVEL: {
         type: 'enum',
         description: 'Logging level',
         defaultValue: 'INFO',
@@ -11,7 +11,7 @@ export const CONF_PARAMS: Record<string, EnvVarDefinition> = {
         required: false
     },
 
-    'COT_URL': {
+    COT_URL: {
         type: 'url',
         description: 'URL of the CoT destination, typically Mesh SA or TAK Server',
         defaultValue: 'udp+wo://239.2.3.1:6969',
@@ -20,16 +20,16 @@ export const CONF_PARAMS: Record<string, EnvVarDefinition> = {
         required: true
     },
 
-    'SENSOR_ID': {
+    SENSOR_ID: {
         type: 'string',
-        description: 'Unique Sensor ID for this source.',   
+        description: 'Unique Sensor ID for this source.',
         defaultValue: 'Unknown-Sensor-Id',
         validation: /^[a-zA-Z0-9\-_]+$/,
         requiresQuoting: false,
         required: false
     },
 
-    'SENSOR_PAYLOAD_TYPE': {
+    SENSOR_PAYLOAD_TYPE: {
         type: 'string',
         description: 'Sensor Payload Type, used to identify the type of sensor data being sent',
         defaultValue: 'Uknown-Sensor-Payload-Type',
@@ -38,25 +38,25 @@ export const CONF_PARAMS: Record<string, EnvVarDefinition> = {
         required: false
     },
 
-    'SENSOR_COT_TYPE': {
+    SENSOR_COT_TYPE: {
         type: 'string',
         description: 'Sensor CoT Type, used to categorize the sensor data in the CoT messages',
-        defaultValue: 'a-f-G-E-S-E',  
+        defaultValue: 'a-f-G-E-S-E',
         validation: /^[a-zA-Z0-9\-_]+$/,
         requiresQuoting: false,
         required: false
     },
 
-    'OP_COT_TYPE': {
+    OP_COT_TYPE: {
         type: 'string',
         description: 'Operator CoT Type, used to categorize the operator in the CoT messages',
-        defaultValue: 'a-u-G',  
+        defaultValue: 'a-u-G',
         validation: /^[a-zA-Z0-9\-_]+$/,
         requiresQuoting: false,
         required: false
     },
 
-    'UAS_COT_TYPE': {
+    UAS_COT_TYPE: {
         type: 'string',
         description: 'UAS CoT Type, used to categorize the UAS in the CoT messages',
         defaultValue: 'a-u-A-M-H-Q',
@@ -65,8 +65,8 @@ export const CONF_PARAMS: Record<string, EnvVarDefinition> = {
         required: false
     },
 
-    'HOME_COT_TYPE': {
-        type: 'string', 
+    HOME_COT_TYPE: {
+        type: 'string',
         description: 'Home CoT Type, used to categorize the home location in the CoT messages',
         defaultValue: 'a-u-G',
         validation: /^[a-zA-Z0-9\-_]+$/,
@@ -74,7 +74,7 @@ export const CONF_PARAMS: Record<string, EnvVarDefinition> = {
         required: false
     },
 
-    'MQTT_BROKER': {
+    MQTT_BROKER: {
         type: 'string',
         description: 'MQTT Broker address (hostname or IP address)',
         defaultValue: 'localhost',
@@ -82,7 +82,7 @@ export const CONF_PARAMS: Record<string, EnvVarDefinition> = {
         required: false
     },
 
-    'MQTT_PORT': {
+    MQTT_PORT: {
         type: 'number',
         description: 'MQTT Broker port',
         defaultValue: '1883',
@@ -90,21 +90,21 @@ export const CONF_PARAMS: Record<string, EnvVarDefinition> = {
         required: false
     },
 
-    'MQTT_TOPIC': {
+    MQTT_TOPIC: {
         type: 'string',
         description: 'MQTT Topic to subscribe to for receiving aircraft position data',
         defaultValue: 'aircraft/positions',
         requiresQuoting: false,
         required: false
     },
-    'MQTT_USERNAME': {
+    MQTT_USERNAME: {
         type: 'string',
         description: 'Username for MQTT Broker authentication, if required',
         defaultValue: '',
         requiresQuoting: false,
         required: false
     },
-    'MQTT_PASSWORD': {
+    MQTT_PASSWORD: {
         type: 'string',
         description: 'Password for MQTT Broker authentication, if required',
         defaultValue: '',
@@ -112,7 +112,7 @@ export const CONF_PARAMS: Record<string, EnvVarDefinition> = {
         required: false
     },
 
-    'MQTT_CLIENT_ID': {
+    MQTT_CLIENT_ID: {
         type: 'string',
         description: 'Client ID to use when connecting to the MQTT Broker',
         defaultValue: 'pyTAK-mqtt-bridge',
@@ -120,7 +120,7 @@ export const CONF_PARAMS: Record<string, EnvVarDefinition> = {
         required: false
     },
 
-    'MQTT_TLS_CLIENT_CERT': {
+    MQTT_TLS_CLIENT_CERT: {
         type: 'path',
         description: 'Path to client certificate file for TLS connection to the MQTT Broker, if required',
         defaultValue: '',
@@ -129,7 +129,7 @@ export const CONF_PARAMS: Record<string, EnvVarDefinition> = {
         required: false
     },
 
-    'MQTT_TLS_CLIENT_KEY': {
+    MQTT_TLS_CLIENT_KEY: {
         type: 'path',
         description: 'Path to client key file for TLS connection to the MQTT Broker, if required',
         defaultValue: '',
@@ -138,7 +138,7 @@ export const CONF_PARAMS: Record<string, EnvVarDefinition> = {
         required: false
     },
 
-    'EXTRA_ARGS': {
+    EXTRA_ARGS: {
         type: 'string',
         description: 'Additional command line arguments (NOT IMPLEMENTED YET)',
         defaultValue: '',
@@ -244,7 +244,7 @@ export const CONF_PARAMS: Record<string, EnvVarDefinition> = {
     },
 
     // CoT Event Type and Icon Configuration
-    'COT_STALE': {
+    COT_STALE: {
         type: 'number',
         description: 'CoT Stale period ("timeout"), in seconds',
         defaultValue: '',
@@ -252,7 +252,7 @@ export const CONF_PARAMS: Record<string, EnvVarDefinition> = {
         required: false
     },
 
-    'COT_TYPE': {
+    COT_TYPE: {
         type: 'string',
         description: 'Override COT Event Type ("marker type")',
         defaultValue: '',
@@ -261,14 +261,14 @@ export const CONF_PARAMS: Record<string, EnvVarDefinition> = {
         required: false
     },
 
-    'COT_ICON': {
+    COT_ICON: {
         type: 'string',
         description: 'Set a custom user icon / custom marker icon in TAK. Contains a Data Package UUID and resource name (file name)',
         defaultValue: '',
         requiresQuoting: false,
         required: false
     },
-    
+
     "COT_CAVEAT": {
         type: 'string',
         description: 'CoT Caveat for the messages, used to indicate special conditions',

@@ -5,7 +5,7 @@
   },
   "tools": {
     "index": {
-      "label": "Air (DroneCOT)",
+      "label": "Drone Remote ID (DRONECOT)",
       "path": "/dronecot"
     }
   }

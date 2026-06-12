@@ -1,0 +1,10 @@
+polkit.addRule(function(action, subject) {
+    if (action.id == "org.freedesktop.policykit.exec" &&
+        subject.isInGroup("sudo")) {
+        var path = action.lookup("path");
+        if (path == "/etc/default/dronecot" ||
+            (typeof path == "string" && path.indexOf("/etc/dronecot/tls/") === 0)) {
+            return polkit.Result.YES;
+        }
+    }
+});

@@ -300,5 +300,64 @@ export const CONF_PARAMS: Record<string, EnvVarDefinition> = {
         defaultValue: 'false',
         validation: /^(true|false|yes|no|1|0)$/i,
         required: false
-    }
+    },
+
+    PYTAK_TLS_CLIENT_CERT: {
+        type: 'path',
+        description: 'TLS client certificate (PEM)',
+        defaultValue: '',
+        validation: /^(?:|[/][\w./-]*)$/,
+        requiresQuoting: false,
+        required: false
+    },
+
+    PYTAK_TLS_CLIENT_KEY: {
+        type: 'path',
+        description: 'TLS client private key (PEM)',
+        defaultValue: '',
+        validation: /^(?:|[/][\w./-]*)$/,
+        requiresQuoting: false,
+        required: false
+    },
+
+    PYTAK_TLS_CLIENT_PASSWORD: {
+        type: 'string',
+        description: 'Password for TLS client key/cert',
+        defaultValue: '',
+        requiresQuoting: false,
+        required: false
+    },
+
+    PYTAK_TLS_DONT_VERIFY: {
+        type: 'boolean',
+        description: 'Disable TLS certificate verification',
+        defaultValue: 'false',
+        validation: /^(true|false|yes|no|1|0)$/i,
+        required: false
+    },
+
+    PYTAK_TLS_DONT_CHECK_HOSTNAME: {
+        type: 'boolean',
+        description: 'Disable TLS hostname verification',
+        defaultValue: 'false',
+        validation: /^(true|false|yes|no|1|0)$/i,
+        required: false
+    },
+
+    PYTAK_TLS_CLIENT_CAFILE: {
+        type: 'path',
+        description: 'CA trust store for TLS verification',
+        defaultValue: '',
+        validation: /^(?:|[/][\w./-]*)$/,
+        requiresQuoting: false,
+        required: false
+    },
+
+    PYTAK_TLS_SERVER_EXPECTED_HOSTNAME: {
+        type: 'string',
+        description: 'Expected TLS server hostname/CN',
+        defaultValue: '',
+        requiresQuoting: false,
+        required: false
+    },
 };

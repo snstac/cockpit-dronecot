@@ -7,6 +7,7 @@
 # general patterns
 *.pyc
 *.rpm
+*.deb
 
 # toplevel (/...)
 /Test*.html
@@ -17,9 +18,9 @@
 /*.whl
 /bots
 /cockpit-*.tar.xz
+/out/
 /cockpit-navigator.spec
 /dist/
-/package-lock.json
 /pkg/
 /node_modules/
 /tmp/

@@ -50,7 +50,8 @@ jobs:
       - name: Sanity-check package contents
         run: |
           deb=$(ls out/*.deb); echo "== $deb =="
-          dpkg-deb -c "$deb" | grep -E 'cockpit/dronecot|metainfo|polkit' | head
+          dpkg-deb -c "$deb" > /tmp/deb-contents.txt
+          grep -E 'cockpit/dronecot|metainfo|polkit' /tmp/deb-contents.txt | head
           dpkg-deb -I "$deb" | grep -E 'Package|Version|Depends|Architecture'
 
       - uses: actions/upload-artifact@v4

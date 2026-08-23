@@ -5,7 +5,7 @@
   },
   "tools": {
     "index": {
-      "label": "Drone Remote ID (DRONECOT)",
+      "label": "DJI DroneID / AntSDR (DroneCOT)",
       "path": "/dronecot"
     }
   }

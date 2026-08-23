@@ -37,7 +37,9 @@ import { CONF_PARAMS } from './conf';
 
 const _ = cockpit.gettext;
 
-const SERVICE_NAME = 'dronecot';
+// AryaOS assigns each receiver path an explicit instance name. This page owns
+// the DJI OcuSync/AntSDR path; Remote ID receivers have separate units.
+const SERVICE_NAME = 'dronecot-dji';
 const CONFIG_FILE = `/etc/default/${SERVICE_NAME}`;
 const KNOWN_KEYS = new Set(Object.keys(CONF_PARAMS));
 
@@ -439,7 +441,7 @@ export const Application: React.FC = () => {
                             <div className="dronecot-config-actions">
                                 <Checkbox
                                 id="dronecot-save-restart"
-                                label={_('Restart dronecot after save')}
+                                label={_('Restart dronecot-dji after save')}
                                 isChecked={saveAndRestart}
                                 onChange={(_ev, checked) => setSaveAndRestart(checked)}
                                 />

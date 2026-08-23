@@ -13,8 +13,8 @@ vendor: "Sensors & Signals LLC"
 homepage: https://github.com/snstac/cockpit-dronecot
 license: LGPL-2.1
 description: |
-  Cockpit web console plugin for DRONECOT, the Drone Remote ID to TAK gateway.
-  Manage the DRONECOT service, edit /etc/default/dronecot configuration, manage
+  Cockpit web console plugin for the AryaOS DJI/AntSDR DroneCOT instance.
+  Manage dronecot-dji, edit /etc/default/dronecot-dji configuration, manage
   TLS certificates, and view journal output from a web UI.
 
 depends:

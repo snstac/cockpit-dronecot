@@ -5,8 +5,7 @@
   <name>DroneCOT</name>
   <summary>Cockpit Module for DroneCOT</summary>
   <description>
-    <p>This Cockpit module enables management of DroneCOT, a gateway that connects marine systems to TAK.</p>
-    </p>
+    <p>This Cockpit module manages DroneCOT receivers that send drone tracks to TAK.</p>
   </description>
   <extends>com.snstac.dronecot</extends>
   <launchable type="cockpit-manifest">dronecot</launchable>

@@ -1,8 +1,8 @@
-# cockpit-dronecot — DJI DroneID / AntSDR management for TAK, in your browser
+# cockpit-dronecot — Drone and Remote ID management for TAK, in your browser
 
 A [Cockpit](https://cockpit-project.org/) web console plugin for
-[DRONECOT](https://github.com/snstac/dronecot), configured on AryaOS as the
-**DJI DroneID / AntSDR to TAK gateway** (`dronecot-dji.service`).
+[DRONECOT](https://github.com/snstac/dronecot). AryaOS exposes four explicit services:
+`dronecot-dji`, `dronecot-dronescout`, `dronecot-wifi`, and `dronecot-ble`.
 Manage drone detection on a Raspberry Pi or any Debian/RHEL sensor node from a browser:
 no SSH, no config-file spelunking.
 
@@ -14,8 +14,8 @@ critical infrastructure, and event protection.
 
 ## Features
 
-- **Service control** — start/stop/restart `dronecot-dji`, live status, journal logs.
-- **Configuration editor** — every `/etc/default/dronecot-dji` setting (CoT destination URL,
+- **Service control** — start, stop, restart, status, and logs for all four services.
+- **Configuration editor** — each service uses its matching `/etc/default/dronecot-*` file (CoT destination URL,
   sensor ID, CoT types for sensor/operator/UAS, log level) with validation, preserved
   comments, and optional restart-on-save.
 - **TAK TLS** — upload client certificate/key/CA (PEM) and wire up the full

@@ -3,6 +3,9 @@ polkit.addRule(function(action, subject) {
         subject.isInGroup("sudo")) {
         var path = action.lookup("path");
         if (path == "/etc/default/dronecot-dji" ||
+            path == "/etc/default/dronecot-dronescout" ||
+            path == "/etc/default/dronecot-wifi" ||
+            path == "/etc/default/dronecot-ble" ||
             (typeof path == "string" && path.indexOf("/etc/dronecot/tls/") === 0)) {
             return polkit.Result.YES;
         }

@@ -1,6 +1,6 @@
 import { EnvVarDefinition } from '@snstac/cockpit-shared';
 
-export const CONF_PARAMS: Record<string, EnvVarDefinition> = {
+export const COMMON_CONF_PARAMS: Record<string, EnvVarDefinition> = {
 
     LOG_LEVEL: {
         type: 'enum',
@@ -13,18 +13,9 @@ export const CONF_PARAMS: Record<string, EnvVarDefinition> = {
 
     COT_URL: {
         type: 'url',
-        description: 'URL of the CoT destination, typically Mesh SA or TAK Server',
-        defaultValue: 'udp+wo://239.2.3.1:6969',
+        description: 'Optional per-service CoT destination. Leave empty to inherit the AryaOS site route.',
+        defaultValue: '',
         validation: /^(udp\+wo|http|https|udp|tcp|tls|file|log|tcp\+wo|udp\+broadcast):\/\/[^\s]+$/,
-        requiresQuoting: false,
-        required: true
-    },
-
-    SENSOR_ID: {
-        type: 'string',
-        description: 'Unique Sensor ID for this source.',
-        defaultValue: 'Unknown-Sensor-Id',
-        validation: /^[a-zA-Z0-9\-_]+$/,
         requiresQuoting: false,
         required: false
     },

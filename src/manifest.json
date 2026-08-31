@@ -4,9 +4,21 @@
     "cockpit": "215"
   },
   "tools": {
-    "index": {
+    "dji": {
       "label": "DJI DroneID / AntSDR (DroneCOT)",
-      "path": "/dronecot"
+      "path": "dji.html"
+    },
+    "dronescout": {
+      "label": "DroneScout Remote ID (DroneCOT)",
+      "path": "dronescout.html"
+    },
+    "wifi": {
+      "label": "Wi-Fi Remote ID (DroneCOT)",
+      "path": "wifi.html"
+    },
+    "ble": {
+      "label": "Bluetooth Remote ID (DroneCOT)",
+      "path": "ble.html"
     }
   }
 }

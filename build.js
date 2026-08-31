@@ -98,6 +98,8 @@ const context = await esbuild.context({
                 build.onEnd(() => {
                     fs.copyFileSync('./src/manifest.json', './dist/manifest.json');
                     fs.copyFileSync('./src/index.html', './dist/index.html');
+                    for (const page of ['dji', 'dronescout', 'wifi', 'ble'])
+                        fs.copyFileSync('./src/index.html', `./dist/${page}.html`);
 
                     const srcAssets = path.join(
                         'node_modules',

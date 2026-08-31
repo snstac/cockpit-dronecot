@@ -33,15 +33,27 @@ import {
     serializeEnvDefault,
 } from '@snstac/cockpit-shared';
 
-import { CONF_PARAMS } from './conf';
+import { currentInstance } from './instances';
 
 const _ = cockpit.gettext;
 
-// AryaOS assigns each receiver path an explicit instance name. This page owns
-// the DJI OcuSync/AntSDR path; Remote ID receivers have separate units.
-const SERVICE_NAME = 'dronecot-dji';
-const CONFIG_FILE = `/etc/default/${SERVICE_NAME}`;
+// The page filename selects one fixed instance from an allowlist. Do not accept
+// a service or file path from a URL option: Cockpit can run this page as root.
+const INSTANCE = currentInstance();
+const SERVICE_NAME = INSTANCE.serviceName;
+const CONFIG_FILE = INSTANCE.configFile;
+const CONF_PARAMS = INSTANCE.config;
 const KNOWN_KEYS = new Set(Object.keys(CONF_PARAMS));
+
+function normalizedForm(values: Record<string, string>): Record<string, string> {
+    const normalized = { ...values };
+    for (const [key, def] of Object.entries(CONF_PARAMS)) {
+        if (def.type !== 'boolean' || !(key in normalized))
+            continue;
+        normalized[key] = /^(true|yes|1)$/i.test(normalized[key]) ? 'true' : 'false';
+    }
+    return normalized;
+}
 
 function StatusOutput({ serviceName }: { serviceName: string }) {
     const [statusOutput, setStatusOutput] = useState<string>('Loading...');
@@ -108,7 +120,7 @@ export const Application: React.FC = () => {
     const applyContent = useCallback((content: string) => {
         const { lines, values } = parseEnvDefault(content, KNOWN_KEYS);
         setFileLines(lines);
-        setEnvVarForm(mergeFormValues(defaultFormFromConf(CONF_PARAMS), values));
+        setEnvVarForm(normalizedForm(mergeFormValues(defaultFormFromConf(CONF_PARAMS), values)));
         setConfigFileContents(content);
         setConfigLoadError(null);
         setDirty(false);
@@ -192,7 +204,7 @@ export const Application: React.FC = () => {
                         .replace(newConfig + (newConfig.endsWith('\n') ? '' : '\n'));
                 const parsed = parseEnvDefault(newConfig, KNOWN_KEYS);
                 setFileLines(parsed.lines);
-                setEnvVarForm(mergeFormValues(defaultFormFromConf(CONF_PARAMS), parsed.values));
+                setEnvVarForm(normalizedForm(mergeFormValues(defaultFormFromConf(CONF_PARAMS), parsed.values)));
                 setConfigFileContents(newConfig);
                 setDirty(false);
                 if (saveAndRestart) {
@@ -292,7 +304,8 @@ export const Application: React.FC = () => {
     }, []);
 
     return (
-        <div data-testid="dronecot-app">
+        <div data-testid="dronecot-app" data-instance={INSTANCE.key}>
+            <h1>{INSTANCE.label}</h1>
             {toast && (
                 <Alert
                     variant={toast.variant}
@@ -441,7 +454,7 @@ export const Application: React.FC = () => {
                             <div className="dronecot-config-actions">
                                 <Checkbox
                                 id="dronecot-save-restart"
-                                label={_('Restart dronecot-dji after save')}
+                                label={_('Restart {service} after save').replace('{service}', SERVICE_NAME)}
                                 isChecked={saveAndRestart}
                                 onChange={(_ev, checked) => setSaveAndRestart(checked)}
                                 />

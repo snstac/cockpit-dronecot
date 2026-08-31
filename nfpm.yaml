@@ -13,9 +13,9 @@ vendor: "Sensors & Signals LLC"
 homepage: https://github.com/snstac/cockpit-dronecot
 license: LGPL-2.1
 description: |
-  Cockpit web console plugin for the AryaOS DJI/AntSDR DroneCOT instance.
-  Manage dronecot-dji, edit /etc/default/dronecot-dji configuration, manage
-  TLS certificates, and view journal output from a web UI.
+  Cockpit web console plugin for AryaOS DroneCOT receivers.
+  Manage the explicit DJI, DroneScout, Wi-Fi Remote ID, and Bluetooth Remote ID
+  services, their configuration, TLS certificates, status, and journal output.
 
 depends:
   - cockpit-bridge
